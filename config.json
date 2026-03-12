@@ -1,0 +1,222 @@
+{
+  "excel_path": "데이터.xlsx",
+  "db_path": "data/comments.db",
+  "max_rows": 500,
+
+  "indices_left": [
+    {
+      "name": "통안2Y",
+      "sheet": "국내채권",
+      "index": "통안 2Y",
+      "value_col": "민평3사 수익률(산출일) 당일",
+      "fallback_col": "민평3사 수익률(산출일)",
+      "fmt": "rate",
+      "unit": "%"
+    },
+    {
+      "name": "국고3Y",
+      "sheet": "국내채권",
+      "index": "국고 3Y",
+      "value_col": "민평3사 수익률(산출일) 당일",
+      "fallback_col": "민평3사 수익률(산출일)",
+      "fmt": "rate",
+      "unit": "%"
+    },
+    {
+      "name": "국고5Y",
+      "sheet": "국내채권",
+      "index": "국고 5Y",
+      "value_col": "민평3사 수익률(산출일) 당일",
+      "fallback_col": "민평3사 수익률(산출일)",
+      "fmt": "rate",
+      "unit": "%"
+    },
+    {
+      "name": "국고10Y",
+      "sheet": "국내채권",
+      "index": "국고 10Y",
+      "value_col": "민평3사 수익률(산출일) 당일",
+      "fallback_col": "민평3사 수익률(산출일)",
+      "fmt": "rate",
+      "unit": "%"
+    },
+    {
+      "name": "국채3년선물",
+      "sheet": "국내채권",
+      "index": "3년국채 연결",
+      "value_col": "현재가",
+      "fmt": "price",
+      "unit": ""
+    },
+    {
+      "name": "USD/KRW",
+      "sheet": "환율",
+      "index": "서울외환(기업용) USDKRW 스팟 (~15:30)",
+      "value_col": "현재가",
+      "fmt": "fx",
+      "unit": ""
+    },
+    {
+      "name": "NDF",
+      "sheet": "환율",
+      "index": "NDF 뉴욕 NDF 뉴욕",
+      "value_col": "NDF_MID_Close",
+      "fmt": "fx",
+      "unit": ""
+    },
+    {
+      "name": "Dollar Index",
+      "sheet": "환율",
+      "index": "달러인덱스 DOLLARS",
+      "value_col": "KR_MID_Close",
+      "fmt": "index2",
+      "unit": ""
+    },
+    {
+      "name": "USD/JPY",
+      "sheet": "환율",
+      "index": "서울외환 이종통화 USDJPY",
+      "value_col": "Close",
+      "fmt": "fx",
+      "unit": ""
+    },
+    {
+      "name": "EUR/USD",
+      "sheet": "환율",
+      "index": "서울외환 이종통화 EURUSD",
+      "value_col": "Close",
+      "fmt": "fx4",
+      "unit": ""
+    },
+    {
+      "name": "JPY/KRW",
+      "sheet": "환율",
+      "index": "서울외환 이종통화 JPYKRW",
+      "value_col": "Close",
+      "fmt": "fx2",
+      "unit": ""
+    },
+    {
+      "name": "USD/CNY",
+      "sheet": "환율",
+      "index": "중국:USDCNY:뉴욕종가",
+      "value_col": "현재가",
+      "fmt": "fx4",
+      "unit": ""
+    },
+    {
+      "name": "GBP/USD",
+      "sheet": "환율",
+      "index": "영국:GBPUSD:뉴욕종가",
+      "value_col": "현재가",
+      "fmt": "fx4",
+      "unit": ""
+    }
+  ],
+
+  "indices_right": [
+    {
+      "name": "KOSPI",
+      "sheet": "주가지수",
+      "index": "KOSPI",
+      "value_col": "현재가",
+      "fmt": "index2",
+      "unit": ""
+    },
+    {
+      "name": "NIKKEI",
+      "sheet": "주가지수",
+      "index": "니케이 225",
+      "value_col": "현재가",
+      "fmt": "index2",
+      "unit": ""
+    },
+    {
+      "name": "중국상해종합",
+      "sheet": "지수",
+      "index": "중국:상하이종합지수",
+      "value_col": "현재가",
+      "fmt": "index2",
+      "unit": ""
+    },
+    {
+      "name": "DOW",
+      "sheet": "주가지수",
+      "index": "다우",
+      "value_col": "현재가",
+      "fmt": "index2",
+      "unit": ""
+    },
+    {
+      "name": "S&P500",
+      "sheet": "주가지수",
+      "index": "S&P 500",
+      "value_col": "현재가",
+      "fmt": "index2",
+      "unit": ""
+    },
+    {
+      "name": "NASDAQ",
+      "sheet": "주가지수",
+      "index": "나스닥",
+      "value_col": "현재가",
+      "fmt": "index2",
+      "unit": ""
+    },
+    {
+      "name": "T-Note (2yr)",
+      "sheet": "해외채권",
+      "index": "2년 T-NOTE",
+      "value_col": "현재가",
+      "fmt": "rate",
+      "unit": "%"
+    },
+    {
+      "name": "T-Note (10yr)",
+      "sheet": "해외채권",
+      "index": "10년 T-NOTE",
+      "value_col": "현재가",
+      "fmt": "rate",
+      "unit": "%"
+    },
+    {
+      "name": "T-Bill (30yr)",
+      "sheet": "해외채권",
+      "index": "30년 T-BOND",
+      "value_col": "현재가",
+      "fmt": "rate",
+      "unit": "%"
+    },
+    {
+      "name": "WTI",
+      "sheet": "원자재",
+      "index": "WTI 현물",
+      "value_col": "현재가",
+      "fmt": "price",
+      "unit": "$"
+    },
+    {
+      "name": "GOLD",
+      "sheet": "yfinance",
+      "ticker": "GC=F",
+      "fmt": "price",
+      "unit": "$"
+    },
+    {
+      "name": "SOFR",
+      "sheet": "외환",
+      "index": "미국:SOFR:90일평균",
+      "value_col": "현재가",
+      "fmt": "rate",
+      "unit": "%"
+    },
+    {
+      "name": "TED spread",
+      "sheet": "지수",
+      "index": "미국:TED스프레드",
+      "value_col": "현재가",
+      "fmt": "bp",
+      "unit": "bp"
+    }
+  ]
+}

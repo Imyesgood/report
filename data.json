@@ -1,0 +1,658 @@
+{
+  "generated_at": "2026-03-12",
+  "base_date": "2026-03-11",
+  "today": "2026-03-12",
+  "indices": [
+    {
+      "label": "통안 2Y",
+      "section": "left",
+      "type": "rate",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 3.098
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 3.11,
+        "change": -1.2
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 3.042,
+        "change": 5.6
+      },
+      "YTM": {
+        "date": "2026-01-02",
+        "value": 2.826,
+        "change": 27.2
+      }
+    },
+    {
+      "label": "국고 3Y",
+      "section": "left",
+      "type": "rate",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 3.25
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 3.28,
+        "change": -3.0
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 3.2,
+        "change": 5.0
+      },
+      "YTM": {
+        "date": "2026-01-02",
+        "value": 2.926,
+        "change": 32.4
+      }
+    },
+    {
+      "label": "국고 5Y",
+      "section": "left",
+      "type": "rate",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 3.47
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 3.505,
+        "change": -3.5
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 3.457,
+        "change": 1.3
+      },
+      "YTM": {
+        "date": "2026-01-02",
+        "value": 3.235,
+        "change": 23.5
+      }
+    },
+    {
+      "label": "국고 10Y",
+      "section": "left",
+      "type": "rate",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 3.612
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 3.619,
+        "change": -0.7
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 3.635,
+        "change": -2.3
+      },
+      "YTM": {
+        "date": "2026-01-02",
+        "value": 3.385,
+        "change": 22.7
+      }
+    },
+    {
+      "label": "국채3년선물",
+      "section": "left",
+      "type": "equity",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 104.97
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 104.83,
+        "change": 0.134
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 104.94,
+        "change": 0.029
+      },
+      "YTM": {
+        "date": "2026-01-02",
+        "value": 105.43,
+        "change": -0.436
+      }
+    },
+    {
+      "label": "USD/KRW",
+      "section": "left",
+      "type": "fx",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 1466.5
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 1469.3,
+        "change": -0.191
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 1450.1,
+        "change": 1.131
+      },
+      "YTM": {
+        "date": "2026-01-02",
+        "value": 1441.8,
+        "change": 1.713
+      }
+    },
+    {
+      "label": "NDF",
+      "section": "left",
+      "type": "fx",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 1478.3
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 1471.9,
+        "change": 0.435
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 1446.2,
+        "change": 2.22
+      },
+      "YTM": {
+        "date": "2026-01-01",
+        "value": 1439.45,
+        "change": 2.699
+      }
+    },
+    {
+      "label": "Dollar Index",
+      "section": "left",
+      "type": "fx",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 98.733
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 98.748,
+        "change": -0.015
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 96.559,
+        "change": 2.251
+      },
+      "YTM": {
+        "date": "2026-01-01",
+        "value": 98.285,
+        "change": 0.456
+      }
+    },
+    {
+      "label": "USD/JPY",
+      "section": "left",
+      "type": "fx",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 158.23
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 157.5,
+        "change": 0.463
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 153.22,
+        "change": 3.27
+      },
+      "YTM": {
+        "date": "2026-01-02",
+        "value": 156.95,
+        "change": 0.816
+      }
+    },
+    {
+      "label": "EUR/USD",
+      "section": "left",
+      "type": "fx",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 1.1613
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 1.1651,
+        "change": -0.326
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 1.1916,
+        "change": -2.543
+      },
+      "YTM": {
+        "date": "2026-01-02",
+        "value": 1.1729,
+        "change": -0.989
+      }
+    },
+    {
+      "label": "JPY/KRW",
+      "section": "left",
+      "type": "fx",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 933.45
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 931.75,
+        "change": 0.182
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 944.39,
+        "change": -1.158
+      },
+      "YTM": {
+        "date": "2026-01-02",
+        "value": 920.48,
+        "change": 1.409
+      }
+    },
+    {
+      "label": "USD/CNY",
+      "section": "left",
+      "type": "fx",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 6.8655
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 6.8766,
+        "change": -0.161
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 6.9125,
+        "change": -0.68
+      },
+      "YTM": {
+        "date": "2026-01-01",
+        "value": 6.9937,
+        "change": -1.833
+      }
+    },
+    {
+      "label": "GBP/USD",
+      "section": "left",
+      "type": "fx",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 1.3412
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 1.3419,
+        "change": -0.052
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 1.36212,
+        "change": -1.536
+      },
+      "YTM": {
+        "date": "2026-01-01",
+        "value": 1.34633,
+        "change": -0.381
+      }
+    },
+    {
+      "label": "KOSPI",
+      "section": "right",
+      "type": "equity",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 5609.95
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 5532.59,
+        "change": 1.398
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 5354.49,
+        "change": 4.771
+      },
+      "YTM": {
+        "date": "2026-01-02",
+        "value": 4309.63,
+        "change": 30.172
+      }
+    },
+    {
+      "label": "NIKKEI",
+      "section": "right",
+      "type": "equity",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 55025.37
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 54248.39,
+        "change": 1.432
+      },
+      "1M": {
+        "date": "2026-02-10",
+        "value": 57650.54,
+        "change": -4.554
+      },
+      "YTM": {
+        "date": "2026-01-05",
+        "value": 51832.8,
+        "change": 6.159
+      }
+    },
+    {
+      "label": "중국상해종합",
+      "section": "right",
+      "type": "equity",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 4133.43
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 4123.14,
+        "change": 0.25
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 4131.99,
+        "change": 0.035
+      },
+      "YTM": {
+        "date": "2026-01-02",
+        "value": 3968.84,
+        "change": 4.147
+      }
+    },
+    {
+      "label": "DOW",
+      "section": "right",
+      "type": "equity",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 34.37
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 33.89,
+        "change": 1.416
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 34.0,
+        "change": 1.088
+      },
+      "YTM": {
+        "date": "2026-01-02",
+        "value": 24.27,
+        "change": 41.615
+      }
+    },
+    {
+      "label": "S&P500",
+      "section": "right",
+      "type": "equity",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 6775.8
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 6781.48,
+        "change": -0.084
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 6941.47,
+        "change": -2.387
+      },
+      "YTM": {
+        "date": "2026-01-02",
+        "value": 6858.47,
+        "change": -1.205
+      }
+    },
+    {
+      "label": "NASDAQ",
+      "section": "right",
+      "type": "equity",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 85.5
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 87.6,
+        "change": -2.397
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 80.42,
+        "change": 6.317
+      },
+      "YTM": {
+        "date": "2026-01-02",
+        "value": 96.66,
+        "change": -11.546
+      }
+    },
+    {
+      "label": "T-Note (2yr)",
+      "section": "right",
+      "type": "rate",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 3.657
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 3.594,
+        "change": 6.3
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 3.514,
+        "change": 14.3
+      },
+      "YTM": {
+        "date": "2026-01-01",
+        "value": 3.473,
+        "change": 18.4
+      }
+    },
+    {
+      "label": "T-Note (10yr)",
+      "section": "right",
+      "type": "rate",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 4.232
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 4.16,
+        "change": 7.2
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 4.174,
+        "change": 5.8
+      },
+      "YTM": {
+        "date": "2026-01-01",
+        "value": 4.179,
+        "change": 5.3
+      }
+    },
+    {
+      "label": "T-Bill (30yr)",
+      "section": "right",
+      "type": "rate",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 4.882
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 4.793,
+        "change": 8.9
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 4.808,
+        "change": 7.4
+      },
+      "YTM": {
+        "date": "2026-01-01",
+        "value": 4.847,
+        "change": 3.5
+      }
+    },
+    {
+      "label": "WTI",
+      "section": "right",
+      "type": "commodity",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 88.31
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 86.44,
+        "change": 2.163
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 64.97,
+        "change": 35.924
+      },
+      "YTM": {
+        "date": "2026-01-01",
+        "value": 57.35,
+        "change": 53.984
+      }
+    },
+    {
+      "label": "GOLD",
+      "section": "right",
+      "type": "commodity",
+      "holiday": false,
+      "pending": true,
+      "T0": {
+        "date": null,
+        "value": null
+      },
+      "1D": {
+        "date": null,
+        "value": null,
+        "change": null
+      },
+      "1M": {
+        "date": null,
+        "value": null,
+        "change": null
+      },
+      "YTM": {
+        "date": null,
+        "value": null,
+        "change": null
+      }
+    },
+    {
+      "label": "SOFR",
+      "section": "right",
+      "type": "rate",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 3.69121
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 3.69413,
+        "change": -0.29
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 3.78854,
+        "change": -9.73
+      },
+      "YTM": {
+        "date": "2026-01-02",
+        "value": 4.00346,
+        "change": -31.22
+      }
+    },
+    {
+      "label": "TED spread",
+      "section": "right",
+      "type": "spread",
+      "holiday": false,
+      "T0": {
+        "date": "2026-03-11",
+        "value": 116.472
+      },
+      "1D": {
+        "date": "2026-03-10",
+        "value": 116.972,
+        "change": -50.0
+      },
+      "1M": {
+        "date": "2026-02-11",
+        "value": 115.472,
+        "change": 100.0
+      },
+      "YTM": {
+        "date": "2026-01-02",
+        "value": 123.372,
+        "change": -690.0
+      }
+    }
+  ]
+}
