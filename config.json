@@ -1,5 +1,5 @@
 {
-  "excel_path": "데이터.xlsx",
+  "excel_path": "us_data.xlsx",
   "db_path": "data/comments.db",
   "max_rows": 500,
 

@@ -186,8 +186,19 @@ def list_dates():
 @app.route("/api/refresh", methods=["POST"])
 def refresh_data():
     try:
-        from data_parser import generate_data
-        generate_data(SETTINGS["excel_path"], DATA_PATH)
+        import importlib, data_parser
+        importlib.reload(data_parser)
+        body = {}
+        try: body = request.get_json(force=True) or {}
+        except: pass
+        print(f"[REFRESH] 받은 payload: {body}")
+        data_parser.generate_data(
+            SETTINGS["excel_path"], DATA_PATH,
+            override_date = body.get("t0") or body.get("date") or request.args.get("t0") or request.args.get("date"),
+            d1_override = body.get("t_minus1") or body.get("d1_date") or request.args.get("t_minus1") or request.args.get("d1_date"),
+            ytm_override = body.get("ytm_start") or body.get("ytm_date") or request.args.get("ytm_start") or request.args.get("ytm_date"),
+            generated_at_override = body.get("generated_at") or request.args.get("generated_at"),
+        )
         return jsonify({"status":"ok"})
     except Exception as e:
         traceback.print_exc()
