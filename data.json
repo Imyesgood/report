@@ -1,35 +1,36 @@
 {
-  "generated_at": "2026-03-17",
-  "base_date": "2026-03-16",
-  "t_minus1": "2026-03-13",
+  "generated_at": "2026-03-18",
+  "base_date": "2026-03-17",
+  "t_minus1": "2026-03-16",
   "ytm_start": "2026-01-02",
-  "today": "2026-03-17",
+  "today": "2026-03-18",
   "indices": [
     {
       "label": "통안 2Y",
       "section": "left",
       "type": "rate",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "통안 2Y",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 3.15
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 3.146,
+        "change": 0.4
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-13",
+        "value": 2.995,
+        "change": 15.5
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 2.826,
+        "change": 32.4
       }
     },
     {
@@ -37,26 +38,27 @@
       "section": "left",
       "type": "rate",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "국고 3Y",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 3.327
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 3.306,
+        "change": 2.1
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-13",
+        "value": 3.14,
+        "change": 18.7
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 2.926,
+        "change": 40.1
       }
     },
     {
@@ -64,26 +66,27 @@
       "section": "left",
       "type": "rate",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "국고 5Y",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 3.582
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 3.562,
+        "change": 2.0
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-13",
+        "value": 3.39,
+        "change": 19.2
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 3.235,
+        "change": 34.7
       }
     },
     {
@@ -91,26 +94,27 @@
       "section": "left",
       "type": "rate",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "국고 10Y",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 3.7
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 3.68,
+        "change": 2.0
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-13",
+        "value": 3.565,
+        "change": 13.5
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 3.385,
+        "change": 31.5
       }
     },
     {
@@ -118,26 +122,27 @@
       "section": "left",
       "type": "equity",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "3년국채 연결",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 104.2
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 104.83,
+        "change": -0.601
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-13",
+        "value": 105.12,
+        "change": -0.875
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 105.43,
+        "change": -1.167
       }
     },
     {
@@ -145,26 +150,27 @@
       "section": "left",
       "type": "fx",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "서울외환(기업용) USDKRW 스팟 (~15:30)",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 1493.6
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 1497.5,
+        "change": -0.26
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-13",
+        "value": 1444.9,
+        "change": 3.37
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 1441.8,
+        "change": 3.593
       }
     },
     {
@@ -172,26 +178,27 @@
       "section": "left",
       "type": "fx",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "NDF 뉴욕 NDF 뉴욕",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 1486.3
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 1488.3,
+        "change": -0.134
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-17",
+        "value": 1443.0,
+        "change": 3.001
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 1440.65,
+        "change": 3.169
       }
     },
     {
@@ -199,26 +206,27 @@
       "section": "left",
       "type": "fx",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "달러인덱스 DOLLARS",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 100.052
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 100.366,
+        "change": -0.313
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-17",
+        "value": 97.092,
+        "change": 3.049
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 98.313,
+        "change": 1.769
       }
     },
     {
@@ -226,26 +234,27 @@
       "section": "left",
       "type": "fx",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "서울외환 이종통화 USDJPY",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 159.09
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 159.38,
+        "change": -0.182
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-13",
+        "value": 153.55,
+        "change": 3.608
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 156.95,
+        "change": 1.363
       }
     },
     {
@@ -253,26 +262,27 @@
       "section": "left",
       "type": "fx",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "서울외환 이종통화 EURUSD",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 1.1509
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 1.1445,
+        "change": 0.559
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-13",
+        "value": 1.1858,
+        "change": -2.943
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 1.1729,
+        "change": -1.876
       }
     },
     {
@@ -280,26 +290,27 @@
       "section": "left",
       "type": "fx",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "서울외환 이종통화 JPYKRW",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 935.57
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 936.06,
+        "change": -0.052
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-13",
+        "value": 940.8,
+        "change": -0.556
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 920.48,
+        "change": 1.639
       }
     },
     {
@@ -307,26 +318,27 @@
       "section": "left",
       "type": "fx",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "중국:USDCNY:뉴욕종가",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 6.8869
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 6.8885,
+        "change": -0.023
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-17",
+        "value": 6.9087,
+        "change": -0.316
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 7.0188,
+        "change": -1.879
       }
     },
     {
@@ -334,26 +346,27 @@
       "section": "left",
       "type": "fx",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "영국:GBPUSD:뉴욕종가",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 1.33559
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 1.33199,
+        "change": 0.27
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-17",
+        "value": 1.3561,
+        "change": -1.512
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 1.3459,
+        "change": -0.766
       }
     },
     {
@@ -361,26 +374,27 @@
       "section": "right",
       "type": "equity",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "KOSPI",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 5640.48
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 5549.85,
+        "change": 1.633
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-13",
+        "value": 5507.01,
+        "change": 2.424
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 4309.63,
+        "change": 30.881
       }
     },
     {
@@ -389,7 +403,7 @@
       "type": "equity",
       "holiday": false,
       "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음; 연초 2026-01-02 데이터 없음",
+      "error": "연초 2026-01-02 데이터 없음",
       "T0": {
         "date": null,
         "value": null
@@ -415,26 +429,27 @@
       "section": "right",
       "type": "equity",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "중국:상하이종합지수",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 4049.91
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 4084.79,
+        "change": -0.854
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-13",
+        "value": 4082.07,
+        "change": -0.788
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 3968.84,
+        "change": 2.043
       }
     },
     {
@@ -442,26 +457,27 @@
       "section": "right",
       "type": "equity",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "다우",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 36.91
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 36.0,
+        "change": 2.528
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-17",
+        "value": 31.42,
+        "change": 17.473
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 24.27,
+        "change": 52.081
       }
     },
     {
@@ -469,26 +485,27 @@
       "section": "right",
       "type": "equity",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "S&P 500",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 6716.09
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 6699.38,
+        "change": 0.249
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-17",
+        "value": 6843.22,
+        "change": -1.858
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 6858.47,
+        "change": -2.076
       }
     },
     {
@@ -496,26 +513,27 @@
       "section": "right",
       "type": "equity",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "나스닥",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 86.47
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 85.85,
+        "change": 0.722
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-17",
+        "value": 80.24,
+        "change": 7.764
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 96.66,
+        "change": -10.542
       }
     },
     {
@@ -523,26 +541,27 @@
       "section": "right",
       "type": "rate",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "2년 T-NOTE",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 3.678
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 3.673,
+        "change": 0.5
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-17",
+        "value": 3.439,
+        "change": 23.9
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 3.475,
+        "change": 20.3
       }
     },
     {
@@ -550,26 +569,27 @@
       "section": "right",
       "type": "rate",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "10년 T-NOTE",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 4.202
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 4.22,
+        "change": -1.8
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-17",
+        "value": 4.063,
+        "change": 13.9
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 4.192,
+        "change": 1.0
       }
     },
     {
@@ -577,26 +597,27 @@
       "section": "right",
       "type": "rate",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "30년 T-BOND",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 4.842
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 4.868,
+        "change": -2.6
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-17",
+        "value": 4.69,
+        "change": 15.2
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 4.871,
+        "change": -2.9
       }
     },
     {
@@ -604,26 +625,27 @@
       "section": "left",
       "type": "rate",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "10년 독일 BUND",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 2.9187
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 2.9411,
+        "change": -2.24
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-17",
+        "value": 2.7389,
+        "change": 17.98
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 2.8993,
+        "change": 1.94
       }
     },
     {
@@ -631,26 +653,27 @@
       "section": "left",
       "type": "rate",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "10년 영국 GILT",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 4.6296
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 4.7202,
+        "change": -9.06
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-17",
+        "value": 4.3813,
+        "change": 24.83
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 4.5391,
+        "change": 9.05
       }
     },
     {
@@ -658,26 +681,27 @@
       "section": "left",
       "type": "rate",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음; 연초 2026-01-02 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "10년 일본 JGB",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 2.2629
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 2.28,
+        "change": -1.71
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-17",
+        "value": 2.1264,
+        "change": 13.65
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-05",
+        "value": 2.1197,
+        "change": 14.32
       }
     },
     {
@@ -685,26 +709,27 @@
       "section": "left",
       "type": "commodity",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "WTI 현물",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 95.22
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 94.06,
+        "change": 1.233
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-17",
+        "value": 62.22,
+        "change": 53.038
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 57.25,
+        "change": 66.323
       }
     },
     {
@@ -739,26 +764,27 @@
       "section": "left",
       "type": "rate",
       "holiday": false,
-      "pending": true,
-      "error": "T0 2026-03-16 데이터 없음; T-1 2026-03-13 데이터 없음",
+      "pending": false,
+      "error": null,
+      "source_header": "미국:SOFR:90일평균",
       "T0": {
-        "date": null,
-        "value": null
+        "date": "2026-03-17",
+        "value": 3.6893
       },
       "1D": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-03-16",
+        "value": 3.68919,
+        "change": 0.01
       },
       "1M": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-02-17",
+        "value": 3.76779,
+        "change": -7.85
       },
       "YTM": {
-        "date": null,
-        "value": null,
-        "change": null
+        "date": "2026-01-02",
+        "value": 4.00346,
+        "change": -31.42
       }
     }
   ],
@@ -1008,7 +1034,11 @@
         "2026-03-06",
         "2026-03-09",
         "2026-03-10",
-        "2026-03-11"
+        "2026-03-11",
+        "2026-03-12",
+        "2026-03-13",
+        "2026-03-16",
+        "2026-03-17"
       ],
       "values": [
         2.805,
@@ -1251,7 +1281,11 @@
         3.617,
         3.742,
         3.619,
-        3.612
+        3.612,
+        3.649,
+        3.7,
+        3.68,
+        3.7
       ]
     },
     {
@@ -1510,7 +1544,10 @@
         "2026-03-09",
         "2026-03-10",
         "2026-03-11",
-        "2026-03-12"
+        "2026-03-12",
+        "2026-03-13",
+        "2026-03-16",
+        "2026-03-17"
       ],
       "values": [
         4.302,
@@ -1764,7 +1801,10 @@
         4.098,
         4.16,
         4.232,
-        4.229
+        4.265,
+        4.278,
+        4.22,
+        4.202
       ]
     },
     {
@@ -2023,7 +2063,10 @@
         "2026-03-09",
         "2026-03-10",
         "2026-03-11",
-        "2026-03-12"
+        "2026-03-12",
+        "2026-03-13",
+        "2026-03-16",
+        "2026-03-17"
       ],
       "values": [
         2.8067,
@@ -2277,7 +2320,10 @@
         2.8639,
         2.8302,
         2.935,
-        2.9408
+        2.9439,
+        2.9747,
+        2.9411,
+        2.9187
       ]
     }
   ]

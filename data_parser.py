@@ -75,7 +75,7 @@ INDEX_CONFIG = [
     {"label":"Japan 10Y",   "section":"left", "type":"rate",
      "sheet":"해외채권",
      "header_candidates":["10년 일본 JGB","일본 10년 국채","10년 JGB","일본:10년국채","일본국채10년","JGB 10Y"],
-     "header":"10년 일본 JGB", "value_col":"현재가"},
+     "header":"10년 일본 JGB", "value_col":"현재가", "ytm_date":"2026-01-05"},
 
     {"label":"WTI",          "section":"left",  "type":"commodity",
      "sheet":"원자재",  "header":"WTI 현물",             "value_col":"현재가"},
@@ -188,6 +188,12 @@ def read_series(ws, date_col, val_col, fallback_col=None):
     return primary
 
 
+def nearest_on_or_before(series, target):
+    candidates = [d for d in series if d <= target]
+    if not candidates: return None, None
+    best = max(candidates)
+    return best, series[best]
+
 def calc_change(t0_val, ref_val, index_type):
     if t0_val is None or ref_val is None:
         return None, None
@@ -256,10 +262,13 @@ def generate_data(excel_path, output_path=None,
         fallback_col = find_fallback_col_idx(ws, date_col, cfg.get("fallback_col"))
         series = read_series(ws, date_col, val_col, fallback_col=fallback_col)
 
-        t0_val = series.get(t0_date)
-        t1_val = series.get(t1_date)
-        ytm_val = series.get(ytm_date)
-        m1_val = series.get(one_m_date)
+        t0_val  = series.get(t0_date)
+        t1_val  = series.get(t1_date)
+        m1_date_actual, m1_val = nearest_on_or_before(series, one_m_date)
+        # 지표별 연초 기준일 (개별 설정 없으면 공통 ytm_date 사용)
+        cfg_ytm = cfg.get("ytm_date")
+        effective_ytm = date.fromisoformat(cfg_ytm) if cfg_ytm else ytm_date
+        ytm_val = series.get(effective_ytm)
 
         missing = []
         if t0_val is None:
@@ -267,7 +276,7 @@ def generate_data(excel_path, output_path=None,
         if t1_val is None:
             missing.append(f"T-1 {t1_date} 데이터 없음")
         if ytm_val is None:
-            missing.append(f"연초 {ytm_date} 데이터 없음")
+            missing.append(f"연초 {effective_ytm} 데이터 없음")
 
         if missing:
             results.append(build_pending(cfg, missing))
@@ -287,8 +296,8 @@ def generate_data(excel_path, output_path=None,
             "source_header": header_used,
             "T0": {"date": str(t0_date), "value": t0_val},
             "1D": {"date": str(t1_date), "value": t1_val, "change": d1_change},
-            "1M": {"date": str(one_m_date) if m1_val is not None else None, "value": m1_val, "change": m1_change},
-            "YTM": {"date": str(ytm_date), "value": ytm_val, "change": ytm_change},
+            "1M": {"date": str(m1_date_actual) if m1_date_actual else None, "value": m1_val, "change": m1_change},
+            "YTM": {"date": str(effective_ytm), "value": ytm_val, "change": ytm_change},
         })
 
     wb.close()
