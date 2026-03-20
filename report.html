@@ -144,8 +144,8 @@ input::placeholder,textarea::placeholder{color:var(--muted2);}
 .econ-table td.region{font-weight:600;font-size:9px;color:var(--green);width:44px;white-space:nowrap;vertical-align:middle;}
 .econ-table td.numcol{font-family:var(--mono);font-size:10px;width:68px;white-space:nowrap;}
 .econ-table input,.econ-table textarea{font-size:10px;line-height:1.15;padding:0;}
-.econ-table .editor-shell{min-height:12px;height:100%;position:relative;overflow:auto;overflow-x:hidden;display:flex;}
-.econ-table .ce{font-size:10px;line-height:1.15;min-height:12px;}
+.econ-table .editor-shell{min-height:8px;height:100%;position:relative;overflow:auto;overflow-x:hidden;display:flex;}
+.econ-table .ce{font-size:10px;line-height:1.15;min-height:8px;}
 .add-btn{width:100%;background:none;border:1px dashed var(--border);border-top:none;color:var(--muted2);font-size:9px;cursor:pointer;padding:5px;font-family:var(--sans);transition:all .15s;}
 .add-btn:hover{color:var(--green);border-color:var(--green-rule);background:var(--green-lt);}
 .econ-table tbody tr.econ-data-row td:last-child{position:relative;}
@@ -165,14 +165,16 @@ input::placeholder,textarea::placeholder{color:var(--muted2);}
 .summary-wrap{position:relative;}
 .summary-grid{display:grid;grid-template-columns:var(--sum-col-left,1fr) var(--sum-col-right,1fr);grid-template-rows:var(--sum-row-top,90px) var(--sum-row-bottom,90px);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
 .summary-cell{border-right:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;min-height:0;}
-.summary-cell-body{flex:1;min-height:0;padding:5px 8px;overflow:hidden;}
+.summary-cell-body{flex:1;min-height:0;padding:5px 8px 14px;overflow:hidden;position:relative;}
+.summary-cell-body .summary-cell-rh{position:absolute;left:0;right:0;bottom:0;height:12px;display:flex;align-items:center;justify-content:center;cursor:ns-resize;user-select:none;color:var(--green-rule);font-size:10px;letter-spacing:3px;z-index:4;background:linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.92));}
+.summary-cell-body .summary-cell-rh:hover{color:var(--green-mid);}
 .summary-cell-body .editor-shell{overflow:visible;scrollbar-width:none;}
 .summary-cell-body .alignable{min-height:unset;}
 .summary-cell:nth-child(2){border-right:none;}
 .summary-cell:nth-child(3){border-bottom:none;}
 .summary-cell:nth-child(4){border-right:none;border-bottom:none;}
 .summary-cell-title{font-size:8px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.9);background:var(--green-mid);padding:4px 8px;flex-shrink:0;user-select:none;}
-.summary-cell .ce{font-size:10px;line-height:1.5;min-height:20px;}
+.summary-cell .ce{font-size:10px;line-height:1.45;min-height:8px;}
 .summary-v-handle,.summary-h-handle{position:absolute;z-index:3;user-select:none;}
 .summary-v-handle{top:0;bottom:0;width:10px;cursor:col-resize;transform:translateX(-50%);}
 .summary-h-handle{left:0;right:0;height:10px;cursor:row-resize;transform:translateY(-50%);}
@@ -190,6 +192,8 @@ input::placeholder,textarea::placeholder{color:var(--muted2);}
 .sched-table tbody tr:nth-child(even){background:var(--row-alt);}
 .sched-table tr.sched-row.row-resize-hover td{box-shadow:inset 0 -2px 0 var(--green-rule);}
 .sched-table tr.sched-row.resizing td{box-shadow:inset 0 -2px 0 var(--green-mid);}
+.econ-table tr.econ-data-row.row-resize-hover td{box-shadow:inset 0 -2px 0 var(--green-rule);}
+.econ-table tr.econ-data-row.resizing td{box-shadow:inset 0 -2px 0 var(--green-mid);}
 .sched-table td{padding:0 6px;border-right:1px solid var(--border-lt);vertical-align:middle;overflow:hidden;}
 .sched-table td:last-child{border-right:none;}
 .sched-table td.date-col{width:58px;text-align:center;white-space:nowrap;position:relative;}
@@ -440,7 +444,7 @@ function bindRH(handleId, taIds){
     var startY=e.pageY;
     var startH=tas[0].getBoundingClientRect().height;
     function onMove(e){
-      var minH = (handleId==='rhEvents') ? 10 : 22;
+      var minH = (handleId==='rhEvents') ? 10 : (handleId==='rhSummary' ? 10 : 14);
       var h=Math.max(minH, startH+(e.pageY-startY));
       tas.forEach(function(ta){ ta.style.height=h+'px'; });
       var grid=document.getElementById('summaryGrid');
@@ -627,47 +631,86 @@ function bindEconColResize(){
   });
 }
 
-function bindEconRowResize(){
-  document.querySelectorAll('#econTbody tr.econ-data-row').forEach(function(row){
-    if(row.dataset.bound==='1') return;
-    row.dataset.bound='1';
+function getRowResizeMin(row, fallback){
+  var val=parseFloat(row.getAttribute("data-min-row-height")||"0");
+  return val>0?val:fallback;
+}
+
+function applyRowHeight(row, height, shellSelector){
+  row.style.height=height+"px";
+  row.querySelectorAll("td").forEach(function(td){ td.style.height=height+"px"; });
+  row.querySelectorAll(shellSelector||".editor-shell").forEach(function(shell){
+    var td=shell.closest("td");
+    var tdStyle=td?getComputedStyle(td):null;
+    var pad=(tdStyle?(parseFloat(tdStyle.paddingTop)||0)+(parseFloat(tdStyle.paddingBottom)||0):0);
+    shell.style.height=Math.max(10, height-pad)+"px";
+  });
+}
+
+function bindBottomEdgeRowResize(selector, options){
+  options=options||{};
+  var edge=options.edgeSize||4;
+  var minHeight=options.minHeight||20;
+  var shellSelector=options.shellSelector||'.editor-shell';
+  document.querySelectorAll(selector).forEach(function(row){
+    if(row.dataset.resizeBound==='1') return;
+    row.dataset.resizeBound='1';
     var active=false;
+
+    function isBottomEdge(e){
+      var rect=row.getBoundingClientRect();
+      return (rect.bottom - e.clientY) >= 0 && (rect.bottom - e.clientY) <= edge;
+    }
+
     row.addEventListener('mousemove', function(e){
       if(active) return;
-      var rect=row.getBoundingClientRect();
-      var nearBottom=(rect.bottom - e.clientY) <= 5;
-      row.classList.toggle('row-resize-hover', nearBottom);
+      var near=isBottomEdge(e);
+      row.classList.toggle('row-resize-hover', near);
+      row.style.cursor=near ? 'ns-resize' : '';
     });
-    row.addEventListener('mouseleave', function(){ if(!active) row.classList.remove('row-resize-hover'); });
+
+    row.addEventListener('mouseleave', function(){
+      if(active) return;
+      row.classList.remove('row-resize-hover');
+      row.style.cursor='';
+    });
+
     row.addEventListener('mousedown', function(e){
-      var rect=row.getBoundingClientRect();
-      var nearBottom=(rect.bottom - e.clientY) <= 5;
-      if(!nearBottom) return;
+      if(e.button!==0 || !isBottomEdge(e)) return;
       active=true;
       row.classList.add('resizing');
-      var cells=row.querySelectorAll('td');
-      var ta=row.querySelector('.editor-shell');
-      var startY=e.pageY;
-      var startH=row.getBoundingClientRect().height;
+      row.classList.remove('row-resize-hover');
+      var startY=e.clientY;
+      var startH=parseFloat(row.style.height)||row.getBoundingClientRect().height;
+      var effectiveMin=getRowResizeMin(row, minHeight);
+      document.body.style.userSelect='none';
+
       function onMove(ev){
-        var h=Math.max(20, startH+(ev.pageY-startY));
-        cells.forEach(function(td){ td.style.height=h+'px'; });
-        if(ta) ta.style.height=Math.max(12,h-4)+'px';
+        var nextH=Math.max(effectiveMin, Math.round(startH + (ev.clientY - startY)));
+        applyRowHeight(row, nextH, shellSelector);
       }
+
       function onUp(){
         active=false;
         row.classList.remove('resizing');
-        row.classList.remove('row-resize-hover');
-        document.removeEventListener('mousemove',onMove);
-        document.removeEventListener('mouseup',onUp);
-        syncEconDeleteButtons();
+        row.style.cursor='';
+        document.body.style.userSelect='';
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        if(typeof syncEconDeleteButtons==='function') syncEconDeleteButtons();
         markDirty();
       }
-      document.addEventListener('mousemove',onMove);
-      document.addEventListener('mouseup',onUp);
+
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
       e.preventDefault();
+      e.stopPropagation();
     });
   });
+}
+
+function bindEconRowResize(){
+  bindBottomEdgeRowResize('#econTbody tr.econ-data-row', {minHeight:14, shellSelector:'.editor-shell'});
 }
 
 /* ── 경제지표 ── */
@@ -697,7 +740,7 @@ function econRow(d){
   d=d||{};
   d.align=d.align||{};
   function al(key){ return {h:(d.align&&d.align[key+'_h'])||'left',v:(d.align&&d.align[key+'_v'])||'middle'}; }
-  return '<tr class="econ-data-row">'
+  return '<tr class="econ-data-row" data-min-row-height="14">'
     +'<td class="region">'+makeEditorShell(al('region'), 'data-editor-id="econRegion"', '미국', d.region)+'</td>'
     +'<td>'+makeEditorShell(al('name'), 'data-editor-id="econName"', '지표명', d.name)+'</td>'
     +'<td class="numcol">'+makeEditorShell(al('actual'), 'data-editor-id="econActual"', '—', d.actual)+'</td>'
@@ -755,7 +798,7 @@ function renderSched(sd){
   while(dates.length<5) dates.push(''); while(cells.length<5) cells.push(''); while(align.length<5) align.push({h:'left',v:'top'});
   var h='<div class="sched-wrap"><table class="sched-table" id="schedTable"><colgroup><col id="schedDateCol" style="width:58px"><col></colgroup><tbody>';
   for(var i=0;i<5;i++){
-    h+='<tr class="sched-row"><td class="date-col">';
+    h+='<tr class="sched-row" data-min-row-height="16"><td class="date-col">';
     h+='<input id="sd'+i+'" value="'+esc(dates[i])+'" placeholder="" oninput="markDirty()"><div class="sched-date-resize-handle" data-col="0"></div>';
     h+='</td><td class="content-col">';
     h+=makeEditorShell(align[i], 'data-editor-id="schedCell'+i+'"', '미국: / 유럽: / 아시아: / 오세아니아:', cells[i]);
@@ -775,12 +818,14 @@ function bindSchedResize(){
       if(handle.dataset.bound==='1') return;
       handle.dataset.bound='1';
       handle.addEventListener('mousedown',function(e){
-        var startX=e.pageX;
+        var startX=e.clientX;
         var startW=parseInt(col.style.width,10)||58;
+        document.body.style.userSelect='none';
         function onMove(ev){
-          col.style.width=Math.max(36,startW+(ev.pageX-startX))+'px';
+          col.style.width=Math.max(36,Math.round(startW+(ev.clientX-startX)))+'px';
         }
         function onUp(){
+          document.body.style.userSelect='';
           document.removeEventListener('mousemove',onMove);
           document.removeEventListener('mouseup',onUp);
           markDirty();
@@ -791,44 +836,7 @@ function bindSchedResize(){
       });
     });
   }
-  document.querySelectorAll('#schedTable tr.sched-row').forEach(function(row){
-    if(row.dataset.bound==='1') return;
-    row.dataset.bound='1';
-    var active=false;
-    row.addEventListener('mousemove', function(e){
-      if(active) return;
-      var rect=row.getBoundingClientRect();
-      var nearBottom=(rect.bottom - e.clientY) <= 5;
-      row.classList.toggle('row-resize-hover', nearBottom);
-    });
-    row.addEventListener('mouseleave', function(){ if(!active) row.classList.remove('row-resize-hover'); });
-    row.addEventListener('mousedown', function(e){
-      var rect=row.getBoundingClientRect();
-      var nearBottom=(rect.bottom - e.clientY) <= 5;
-      if(!nearBottom) return;
-      active=true;
-      row.classList.add('resizing');
-      var textarea=row.querySelector('.editor-shell');
-      var startY=e.pageY;
-      var startH=row.getBoundingClientRect().height;
-      function onMove(ev){
-        var h=Math.max(14,startH+(ev.pageY-startY));
-        row.querySelectorAll('td').forEach(function(td){ td.style.height=h+'px'; });
-        if(textarea) textarea.style.height=Math.max(10,h-2)+'px';
-      }
-      function onUp(){
-        active=false;
-        row.classList.remove('resizing');
-        row.classList.remove('row-resize-hover');
-        document.removeEventListener('mousemove',onMove);
-        document.removeEventListener('mouseup',onUp);
-        markDirty();
-      }
-      document.addEventListener('mousemove',onMove);
-      document.addEventListener('mouseup',onUp);
-      e.preventDefault();
-    });
-  });
+  bindBottomEdgeRowResize('#schedTable tr.sched-row', {minHeight:16, shellSelector:'.editor-shell'});
 }
 
 function bindSummaryResize(){
@@ -852,15 +860,17 @@ function bindSummaryResize(){
   if(v.dataset.bound!=='1'){
     v.dataset.bound='1';
     v.addEventListener('mousedown',function(e){
-      var startX=e.pageX;
+      var startX=e.clientX;
       var startLeft=parseFloat(getComputedStyle(grid).gridTemplateColumns.split(' ')[0]) || grid.clientWidth/2;
+      document.body.style.userSelect='none';
       function onMove(ev){
         var total=grid.clientWidth;
-        var left=Math.max(120, Math.min(total-120, startLeft+(ev.pageX-startX)));
+        var left=Math.max(140, Math.min(total-140, Math.round(startLeft+(ev.clientX-startX))));
         grid.style.gridTemplateColumns=left+'px '+(total-left)+'px';
         refreshSummaryHandles();
       }
       function onUp(){
+        document.body.style.userSelect='';
         document.removeEventListener('mousemove',onMove);
         document.removeEventListener('mouseup',onUp);
         markDirty();
@@ -874,17 +884,17 @@ function bindSummaryResize(){
   if(h.dataset.bound!=='1'){
     h.dataset.bound='1';
     h.addEventListener('mousedown',function(e){
-      var startY=e.pageY;
+      var startY=e.clientY;
       var startTop=parseFloat(getComputedStyle(grid).gridTemplateRows.split(' ')[0]) || grid.clientHeight/2;
+      document.body.style.userSelect='none';
       function onMove(ev){
         var total=grid.clientHeight;
-        var top=Math.max(42, Math.min(total-42, startTop+(ev.pageY-startY)));
+        var top=Math.max(26, Math.min(total-26, Math.round(startTop+(ev.clientY-startY))));
         grid.style.gridTemplateRows=top+'px '+(total-top)+'px';
-        ['taBondWrap','taEquityWrap'].forEach(function(id){ var el=document.getElementById(id); if(el) el.style.height=Math.max(20,top-16)+'px'; });
-        ['taCurrencyWrap','taCommodityWrap'].forEach(function(id){ var el=document.getElementById(id); if(el) el.style.height=Math.max(20,total-top-16)+'px'; });
         refreshSummaryHandles();
       }
       function onUp(){
+        document.body.style.userSelect='';
         document.removeEventListener('mousemove',onMove);
         document.removeEventListener('mouseup',onUp);
         markDirty();
@@ -896,6 +906,36 @@ function bindSummaryResize(){
   }
 
   window.requestAnimationFrame(refreshSummaryHandles);
+}
+
+function bindSummaryCellResize(){
+  document.querySelectorAll('.summary-cell-rh').forEach(function(handle){
+    if(handle.dataset.bound==='1') return;
+    handle.dataset.bound='1';
+    handle.addEventListener('mousedown', function(e){
+      var targetId=handle.dataset.target;
+      var target=document.getElementById(targetId);
+      if(!target) return;
+      var startY=e.clientY;
+      var startH=parseFloat(target.style.height)||target.getBoundingClientRect().height;
+      var minH=parseFloat(handle.dataset.min||'8')||8;
+      document.body.style.userSelect='none';
+      function onMove(ev){
+        var nextH=Math.max(minH, Math.round(startH + (ev.clientY - startY)));
+        target.style.height=nextH+'px';
+      }
+      function onUp(){
+        document.body.style.userSelect='';
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        markDirty();
+      }
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+      e.preventDefault();
+      e.stopPropagation();
+    });
+  });
 }
 
 function collectSched(){
@@ -1091,7 +1131,8 @@ function renderAll(data,cmt,activeDate){
   /* 높이 조절: 경제지표, 위원발언, summary 4개, 일정 textarea들 */
   bindRH('rhEcon', ['@#econTbody tr.econ-data-row .editor-shell']);
   bindRH('rhEvents',  ['taEventsWrap']);
-  bindRH('rhSummary', ['taBondWrap','taEquityWrap','taCurrencyWrap','taCommodityWrap']);
+  bindRH('rhSummary', ['taBondWrap','taEquityWrap']);
+  bindSummaryCellResize();
   bindRH('rhSched',   ['schedCell0','schedCell1','schedCell2','schedCell3','schedCell4']);
 
   G.dirty=false; setStatus('','');
@@ -1101,7 +1142,7 @@ function renderAll(data,cmt,activeDate){
   var _t1 =document.getElementById('dateT1');
   var _yt =document.getElementById('dateYtm');
   // 모든 날짜 필드: 비어있을 때만 채움 (사용자 입력 절대 덮어쓰지 않음)
-  if(_t0s) _t0s.value = data.generated_at || '';
+  if(_t0s && !_t0s.value) _t0s.value = data.generated_at || '';
   if(_t0  && !_t0.value)  _t0.value  = data.base_date    || '';
   if(_t1  && !_t1.value)  _t1.value  = data.t_minus1     || '';
   if(_yt  && !_yt.value)  _yt.value  = data.ytm_start    || '';
@@ -1142,14 +1183,12 @@ async function saveAll(){
   }catch(e){setStatus('저장 실패: '+e.message,'fail');}
 }
 
-async function doRefresh(){
+async function doRefresh(overrideDate){
   setStatus('재파싱 중...','');
-  var payload = {
-    generated_at: (document.getElementById('dateT0Star')||{}).value || null,
-    t0: (document.getElementById('dateT0')||{}).value || null,
-    t_minus1: (document.getElementById('dateT1')||{}).value || null,
-    ytm_start: (document.getElementById('dateYtm')||{}).value || null
-  };
+  var payload = {};
+  if(overrideDate) payload.date = overrideDate;
+  if(G._d1Override)  payload.d1_date  = G._d1Override;
+  if(G._ytmOverride) payload.ytm_date = G._ytmOverride;
   var body = JSON.stringify(payload);
 
   try{
@@ -1159,12 +1198,12 @@ async function doRefresh(){
       await loadData();
       // 재파싱 후 툴바 날짜 전체 갱신
       // 재파싱 후: 비어있는 필드만 채움
-      var _t0s=document.getElementById('dateT0Star'); if(_t0s&&G.data) _t0s.value=G.data.generated_at||'';
-      var _t0 =document.getElementById('dateT0');     if(_t0 &&G.data)  _t0.value =G.data.base_date||'';
-      var _t1 =document.getElementById('dateT1');     if(_t1 &&G.data)  _t1.value =G.data.t_minus1||'';
-      var _yt =document.getElementById('dateYtm');    if(_yt &&G.data)  _yt.value =G.data.ytm_start||'';
+      var _t0s=document.getElementById('dateT0Star'); if(_t0s&&G.data&&!_t0s.value) _t0s.value=G.data.generated_at||'';
+      var _t0 =document.getElementById('dateT0');     if(_t0 &&G.data&&!_t0.value)  _t0.value =G.data.base_date||'';
+      var _t1 =document.getElementById('dateT1');     if(_t1 &&G.data&&!_t1.value)  _t1.value =G.data.t_minus1||'';
+      var _yt =document.getElementById('dateYtm');    if(_yt &&G.data&&!_yt.value)  _yt.value =G.data.ytm_start||'';
       syncRefInfoDates();
-      setStatus('재파싱 완료','ok');
+      setStatus('재파싱 완료'+(overrideDate?' ('+overrideDate+')':''),'ok');
     } else throw new Error(j.message);
   }catch(e){setStatus('재파싱 실패: '+e.message,'fail');}
 }
@@ -1186,12 +1225,18 @@ function syncRefInfoDates(){
 
 
 function doRefreshWithDate(){
-  var t0s = (document.getElementById('dateT0Star') ||{}).value || null;
-  var t0  = (document.getElementById('dateT0') ||{}).value || null;
+  // T0: dateT0 필드가 data.base_date와 다를 때만 override로 전송
+  // 같으면 자동 탐지 (엑셀 최신 거래일 자동 사용)
+  // T0: 필드에 값 있으면 무조건 그 날짜로 파싱
+  var t0 = (document.getElementById('dateT0') ||{}).value || null;
+  // T-1: 사용자가 직접 지정한 전일비 기준일
   var d1  = (document.getElementById('dateT1') ||{}).value || null;
+  // YTM: 사용자가 직접 지정한 연초 기준일
   var ytm = (document.getElementById('dateYtm')||{}).value || null;
-  console.log('[재파싱 요청] T0*='+(t0s||'')+' / T0='+(t0||'')+' / T-1='+(d1||'')+' / 연초='+(ytm||''));
-  doRefresh();
+  G._d1Override  = d1  || null;
+  G._ytmOverride = ytm || null;
+  console.log('[재파싱 요청] T0='+(t0||'자동')+' / T-1='+(d1||'자동')+' / YTM='+(ytm||'자동'));
+  doRefresh(t0 || undefined);
 }
 
 async function togglePanel(){
@@ -1241,6 +1286,19 @@ document.addEventListener('keydown',function(e){
     }
   }
 });
+
+document.addEventListener('keydown',function(e){
+  if(!(e.altKey && /^Arrow/.test(e.key))) return;
+  var active=document.activeElement;
+  if(!active) return;
+  var movable=active.closest && (active.closest('#econTbody') || active.closest('#schedTable') || active.closest('#summaryGrid'));
+  if(!movable) return;
+  if(active.classList && (active.classList.contains('ce') || active.tagName==='INPUT')){
+    e.preventDefault();
+    moveEditorFocus(active, e.key);
+  }
+}, true);
+
 window.addEventListener('beforeunload',function(e){ if(G.dirty){e.preventDefault();e.returnValue='';} });
 
 /* ── Undo 스냅샷 시스템 ── */

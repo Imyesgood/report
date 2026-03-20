@@ -1,5 +1,5 @@
 {
-  "excel_path": "C:/Users/User/Downloads/us_data.xlsx",
+  "excel_path": "C:/Users/User/Downloads/report/us_data.xlsx",
   "db_path": "comments.db",
   "port": 5000
 }

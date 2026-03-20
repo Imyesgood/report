@@ -8,7 +8,7 @@ DATA_PATH     = os.path.join(BASE_DIR, "data.json")
 
 # HTML 파일 자동 탐색 (어떤 이름이든 찾아냄)
 def find_html():
-    for name in ["report_gpt_fixed.html", "report.html"]:
+    for name in ["report_resize_tuned_v2.html", "report_resize_tuned.html", "report_gpt_fixed.html", "report.html"]:
         p = os.path.join(BASE_DIR, name)
         if os.path.exists(p):
             return p
@@ -194,10 +194,9 @@ def refresh_data():
         print(f"[REFRESH] 받은 payload: {body}")
         data_parser.generate_data(
             SETTINGS["excel_path"], DATA_PATH,
-            override_date = body.get("t0") or body.get("date") or request.args.get("t0") or request.args.get("date"),
-            d1_override = body.get("t_minus1") or body.get("d1_date") or request.args.get("t_minus1") or request.args.get("d1_date"),
-            ytm_override = body.get("ytm_start") or body.get("ytm_date") or request.args.get("ytm_start") or request.args.get("ytm_date"),
-            generated_at_override = body.get("generated_at") or request.args.get("generated_at"),
+            override_date = body.get("date")     or request.args.get("date"),
+            d1_override   = body.get("d1_date")  or request.args.get("d1_date"),
+            ytm_override  = body.get("ytm_date") or request.args.get("ytm_date"),
         )
         return jsonify({"status":"ok"})
     except Exception as e:

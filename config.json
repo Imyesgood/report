@@ -142,7 +142,7 @@
     {
       "name": "DOW",
       "sheet": "주가지수",
-      "index": "다우",
+      "index": "다우 종합",
       "value_col": "현재가",
       "fmt": "index2",
       "unit": ""

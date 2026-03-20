@@ -47,11 +47,11 @@ INDEX_CONFIG = [
     {"label":"KOSPI",        "section":"right", "type":"equity",
      "sheet":"주가지수", "header":"KOSPI",              "value_col":"현재가"},
     {"label":"NIKKEI",       "section":"right", "type":"equity",
-     "sheet":"주가지수", "header":"니케이 225",          "value_col":"현재가"},
+     "sheet":"주가지수", "header":"니케이 225",          "value_col":"현재가", "ytm_date":"2026-01-05"},
     {"label":"중국상해종합",  "section":"right", "type":"equity",
      "sheet":"지수",    "header":"중국:상하이종합지수",   "value_col":"현재가"},
     {"label":"DOW",          "section":"right", "type":"equity",
-     "sheet":"주가지수", "header":"다우",                "value_col":"현재가"},
+     "sheet":"주가지수", "header":"다우 종합",                "value_col":"현재가"},
     {"label":"S&P500",       "section":"right", "type":"equity",
      "sheet":"주가지수", "header":"S&P 500",             "value_col":"현재가"},
     {"label":"NASDAQ",       "section":"right", "type":"equity",
@@ -80,7 +80,7 @@ INDEX_CONFIG = [
     {"label":"WTI",          "section":"left",  "type":"commodity",
      "sheet":"원자재",  "header":"WTI 현물",             "value_col":"현재가"},
     {"label":"GOLD",         "section":"left",  "type":"commodity",
-     "sheet":"__pending__",  "header":"",                "value_col":""},
+     "sheet":"원자재",   "header":"금 고시가격 USD 온스 AM",  "value_col":"현재가"},
     {"label":"SOFR",         "section":"left",  "type":"rate",
      "sheet":"외환",    "header":"미국:SOFR:90일평균",   "value_col":"현재가"},
 ]
@@ -234,7 +234,7 @@ def generate_data(excel_path, output_path=None,
     ytm_date = parse_iso_date(ytm_override or f"{t0_date.year}-01-02", "연초")
     one_m_date = t0_date - relativedelta(months=1)
 
-    wb = openpyxl.load_workbook(excel_path, data_only=True, read_only=True)
+    wb = openpyxl.load_workbook(excel_path, data_only=True, read_only=False)
     results = []
 
     for cfg in INDEX_CONFIG:
@@ -303,7 +303,7 @@ def generate_data(excel_path, output_path=None,
     wb.close()
 
     chart_cutoff = t0_date - timedelta(days=366)
-    wb2 = openpyxl.load_workbook(excel_path, data_only=True, read_only=True)
+    wb2 = openpyxl.load_workbook(excel_path, data_only=True, read_only=False)
     chart_series = []
     for ccfg in CHART_CONFIG:
         sd = {"label": ccfg["label"], "color": ccfg["color"], "dash": ccfg["dash"], "dates": [], "values": []}
