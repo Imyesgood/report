@@ -290,16 +290,11 @@ def generate_data(excel_path, output_path=None,
         else:
             effective_ytm, ytm_val = first_date_of_year(series, t0_date.year)
 
-        missing = []
+        # 계산 기준값(calc_val) 자체가 전혀 없을 때만 지표 전체를 pending 처리한다.
+        # T-1/1M/연초 중 일부만 값이 없는 경우에는 그 지표(전일대비/1M/연초대비)만
+        # 개별적으로 비워두고(계산값 None), 나머지는 정상 표시한다.
         if calc_val is None:
-            missing.append(f"T0 {t0_date} 및 직전 데이터 없음")
-        if t1_val is None:
-            missing.append(f"T-1 {t1_date} 데이터 없음")
-        if ytm_val is None:
-            missing.append(f"연초 데이터 없음 ({t0_date.year}년)")
-
-        if missing:
-            results.append(build_pending(cfg, missing))
+            results.append(build_pending(cfg, [f"T0 {t0_date} 및 과거 데이터 없음"]))
             continue
 
         _, d1_change = calc_change(calc_val, t1_val, cfg["type"])
