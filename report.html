@@ -391,14 +391,14 @@ function renderIdx(indices, section, refs){
     if(idx.pending){
       t0td = '<td class="pending inl-edit">준비중</td>';
     } else if(idx.holiday||T0.value===null){
-      t0td = '<td class="holiday inl-edit">휴장</td>';
+      t0td = '<td class="holiday inl-edit">휴장/데이터 미수신</td>';
     } else {
       var fv = fmtVal(T0.value,idx.type);
       t0td = '<td class="val inl-edit" data-val="'+T0.value+'" data-type="'+idx.type+'">'+fv+'</td>';
     }
     function chgTd(key, extraCls){
       var d=idx[key];
-      if(idx.pending||idx.holiday||T0.value===null||d.change===null)
+      if(idx.pending||d.change===null)
         return '<td class="na inl-edit '+extraCls+'">—</td>';
       var f=fmtChg(d.change,idx.type);
       return f?'<td class="'+f.cls+' inl-edit '+extraCls+'">'+f.str+'</td>'

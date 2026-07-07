@@ -1,8 +1,12 @@
 
 """
 data_parser.py — 사용자 지정 날짜 절대기준 파서
-- T0*, T0, T-1, 연초는 사용자가 지정한 값을 그대로 사용
-- T0 / T-1 / 연초는 exact match만 허용
+- T0*, T0, T-1은 사용자가 지정한 값을 그대로 사용
+- T0 / T-1은 exact match만 허용 (연초 기준일은 사용자 override가 없으면 자동 인식)
+- 연초 기준일은 지표별로 "그 해 데이터가 처음 등장하는 날짜"를 자동 인식한다
+  (지표마다 개장일이 달라도 하드코딩 없이 동일한 규칙 적용)
+- 현재가(T0)가 없으면(휴장/데이터 미수신) pending 처리하지 않고,
+  가장 최근 이전 날짜 값을 대신 사용해 전일대비/1M/연초대비를 계산한다
 - 값이 없는 지표는 그 지표만 pending 처리
 - 1M은 T0-1개월 exact match 시에만 표시 (없어도 pending 사유로 보지 않음)
 """
@@ -47,7 +51,7 @@ INDEX_CONFIG = [
     {"label":"KOSPI",        "section":"right", "type":"equity",
      "sheet":"주가지수", "header":"KOSPI",              "value_col":"현재가"},
     {"label":"NIKKEI",       "section":"right", "type":"equity",
-     "sheet":"주가지수", "header":"니케이 225",          "value_col":"현재가", "ytm_date":"2026-01-05"},
+     "sheet":"주가지수", "header":"니케이 225",          "value_col":"현재가"},
     {"label":"중국상해종합",  "section":"right", "type":"equity",
      "sheet":"지수",    "header":"중국:상하이종합지수",   "value_col":"현재가"},
     {"label":"DOW",          "section":"right", "type":"equity",
@@ -75,7 +79,7 @@ INDEX_CONFIG = [
     {"label":"Japan 10Y",   "section":"left", "type":"rate",
      "sheet":"해외채권",
      "header_candidates":["10년 일본 JGB","일본 10년 국채","10년 JGB","일본:10년국채","일본국채10년","JGB 10Y"],
-     "header":"10년 일본 JGB", "value_col":"현재가", "ytm_date":"2026-01-05"},
+     "header":"10년 일본 JGB", "value_col":"현재가"},
 
     {"label":"WTI",          "section":"left",  "type":"commodity",
      "sheet":"원자재",  "header":"WTI 현물",             "value_col":"현재가"},
@@ -194,6 +198,12 @@ def nearest_on_or_before(series, target):
     best = max(candidates)
     return best, series[best]
 
+def first_date_of_year(series, year):
+    candidates = [d for d in series if d.year == year]
+    if not candidates: return None, None
+    first = min(candidates)
+    return first, series[first]
+
 def calc_change(t0_val, ref_val, index_type):
     if t0_val is None or ref_val is None:
         return None, None
@@ -231,7 +241,8 @@ def generate_data(excel_path, output_path=None,
     t0_star = parse_iso_date(generated_at_override or date.today().isoformat(), "T0*")
     t0_date = parse_iso_date(override_date or (date.today() - timedelta(days=1)).isoformat(), "T0")
     t1_date = parse_iso_date(d1_override or (t0_date - timedelta(days=1)).isoformat(), "T-1")
-    ytm_date = parse_iso_date(ytm_override or f"{t0_date.year}-01-02", "연초")
+    ytm_date_override = parse_iso_date(ytm_override, "연초") if ytm_override else None
+    ytm_date = ytm_date_override or parse_iso_date(f"{t0_date.year}-01-02", "연초")
     one_m_date = t0_date - relativedelta(months=1)
 
     wb = openpyxl.load_workbook(excel_path, data_only=True, read_only=False)
@@ -262,42 +273,51 @@ def generate_data(excel_path, output_path=None,
         fallback_col = find_fallback_col_idx(ws, date_col, cfg.get("fallback_col"))
         series = read_series(ws, date_col, val_col, fallback_col=fallback_col)
 
-        t0_val  = series.get(t0_date)
+        # 현재가(T0): 없으면 휴장/데이터 미수신 처리 후 직전 영업일 값을 계산용으로 사용
+        t0_val = series.get(t0_date)
+        holiday = t0_val is None
+        if holiday:
+            calc_date, calc_val = nearest_on_or_before(series, t0_date)
+        else:
+            calc_date, calc_val = t0_date, t0_val
+
         t1_val  = series.get(t1_date)
         m1_date_actual, m1_val = nearest_on_or_before(series, one_m_date)
-        # 지표별 연초 기준일 (개별 설정 없으면 공통 ytm_date 사용)
-        cfg_ytm = cfg.get("ytm_date")
-        effective_ytm = date.fromisoformat(cfg_ytm) if cfg_ytm else ytm_date
-        ytm_val = series.get(effective_ytm)
+
+        # 연초 기준일: 사용자 override가 없으면 지표별로 "그 해 처음 등장하는 날짜"를 자동 인식
+        if ytm_date_override:
+            effective_ytm, ytm_val = ytm_date_override, series.get(ytm_date_override)
+        else:
+            effective_ytm, ytm_val = first_date_of_year(series, t0_date.year)
 
         missing = []
-        if t0_val is None:
-            missing.append(f"T0 {t0_date} 데이터 없음")
+        if calc_val is None:
+            missing.append(f"T0 {t0_date} 및 직전 데이터 없음")
         if t1_val is None:
             missing.append(f"T-1 {t1_date} 데이터 없음")
         if ytm_val is None:
-            missing.append(f"연초 {effective_ytm} 데이터 없음")
+            missing.append(f"연초 데이터 없음 ({t0_date.year}년)")
 
         if missing:
             results.append(build_pending(cfg, missing))
             continue
 
-        _, d1_change = calc_change(t0_val, t1_val, cfg["type"])
-        _, m1_change = calc_change(t0_val, m1_val, cfg["type"])
-        _, ytm_change = calc_change(t0_val, ytm_val, cfg["type"])
+        _, d1_change = calc_change(calc_val, t1_val, cfg["type"])
+        _, m1_change = calc_change(calc_val, m1_val, cfg["type"])
+        _, ytm_change = calc_change(calc_val, ytm_val, cfg["type"])
 
         results.append({
             "label": cfg["label"],
             "section": cfg["section"],
             "type": cfg["type"],
-            "holiday": False,
+            "holiday": holiday,
             "pending": False,
-            "error": None,
+            "error": "휴장/데이터 미수신" if holiday else None,
             "source_header": header_used,
-            "T0": {"date": str(t0_date), "value": t0_val},
+            "T0": {"date": str(t0_date), "value": None if holiday else t0_val},
             "1D": {"date": str(t1_date), "value": t1_val, "change": d1_change},
             "1M": {"date": str(m1_date_actual) if m1_date_actual else None, "value": m1_val, "change": m1_change},
-            "YTM": {"date": str(effective_ytm), "value": ytm_val, "change": ytm_change},
+            "YTM": {"date": str(effective_ytm) if effective_ytm else None, "value": ytm_val, "change": ytm_change},
         })
 
     wb.close()
