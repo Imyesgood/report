@@ -274,12 +274,12 @@ input::placeholder,textarea::placeholder{color:var(--muted2);}
       <span class="tb-date-sep"></span>
       <div class="tb-date-item">
         <span class="tb-date-lbl">T-1</span>
-        <input type="date" class="tb-date-input" id="dateT1" title="전일대비 기준일" onchange="syncRefInfoDates()">
+        <input type="date" class="tb-date-input" id="dateT1" title="전일대비 기준일 (비워두면 자동 계산)" onchange="markUserSet(this);syncRefInfoDates()">
       </div>
       <span class="tb-date-sep"></span>
       <div class="tb-date-item">
         <span class="tb-date-lbl">연초</span>
-        <input type="date" class="tb-date-input" id="dateYtm" title="연초대비 기준일" onchange="syncRefInfoDates()">
+        <input type="date" class="tb-date-input" id="dateYtm" title="연초대비 기준일 (비워두면 자동 인식)" onchange="markUserSet(this);syncRefInfoDates()">
       </div>
       <button class="tb-date-btn" onclick="doRefreshWithDate()">↻</button>
     </div>
@@ -1136,16 +1136,18 @@ function renderAll(data,cmt,activeDate){
   bindRH('rhSched',   ['schedCell0','schedCell1','schedCell2','schedCell3','schedCell4']);
 
   G.dirty=false; setStatus('','');
-  // 툴바 4개 날짜 자동 채우기 (사용자가 이미 입력한 경우 덮어쓰지 않음)
+  // 툴바 4개 날짜 자동 채우기
   var _t0s=document.getElementById('dateT0Star');
   var _t0 =document.getElementById('dateT0');
   var _t1 =document.getElementById('dateT1');
   var _yt =document.getElementById('dateYtm');
-  // 모든 날짜 필드: 비어있을 때만 채움 (사용자 입력 절대 덮어쓰지 않음)
+  // T0*/T0: 비어있을 때만 채움 (사용자 입력 절대 덮어쓰지 않음)
   if(_t0s && !_t0s.value) _t0s.value = data.generated_at || '';
   if(_t0  && !_t0.value)  _t0.value  = data.base_date    || '';
-  if(_t1  && !_t1.value)  _t1.value  = data.t_minus1     || '';
-  if(_yt  && !_yt.value)  _yt.value  = data.ytm_start    || '';
+  // T-1/연초: 사용자가 "직접" 지정하지 않은 이상, 매 파싱마다 새로 계산된
+  // 기준일로 계속 갱신한다 (T0가 바뀌면 T-1/연초도 그에 맞춰 자동으로 따라감).
+  if(_t1 && _t1.dataset.userSet!=='1') _t1.value = data.t_minus1 || '';
+  if(_yt && _yt.dataset.userSet!=='1') _yt.value = data.ytm_start || '';
   syncRefInfoDates();
 }
 
@@ -1196,12 +1198,11 @@ async function doRefresh(overrideDate){
     var j=await r.json();
     if(j.status==='ok'){
       await loadData();
-      // 재파싱 후 툴바 날짜 전체 갱신
-      // 재파싱 후: 비어있는 필드만 채움
+      // 재파싱 후 툴바 날짜 갱신 (renderAll에서도 처리되지만 안전하게 한번 더)
       var _t0s=document.getElementById('dateT0Star'); if(_t0s&&G.data&&!_t0s.value) _t0s.value=G.data.generated_at||'';
       var _t0 =document.getElementById('dateT0');     if(_t0 &&G.data&&!_t0.value)  _t0.value =G.data.base_date||'';
-      var _t1 =document.getElementById('dateT1');     if(_t1 &&G.data&&!_t1.value)  _t1.value =G.data.t_minus1||'';
-      var _yt =document.getElementById('dateYtm');    if(_yt &&G.data&&!_yt.value)  _yt.value =G.data.ytm_start||'';
+      var _t1 =document.getElementById('dateT1');     if(_t1 &&G.data&&_t1.dataset.userSet!=='1')  _t1.value =G.data.t_minus1||'';
+      var _yt =document.getElementById('dateYtm');    if(_yt &&G.data&&_yt.dataset.userSet!=='1')  _yt.value =G.data.ytm_start||'';
       syncRefInfoDates();
       setStatus('재파싱 완료'+(overrideDate?' ('+overrideDate+')':''),'ok');
     } else throw new Error(j.message);
@@ -1224,15 +1225,24 @@ function syncRefInfoDates(){
 }
 
 
+function markUserSet(el){
+  // 사용자가 직접 값을 바꿨을 때만 표시(프로그램이 채운 기본값과 구분하기 위함).
+  // 프로그래밍 방식의 value 대입은 change 이벤트를 발생시키지 않으므로,
+  // 이 함수가 호출된다는 것 자체가 "사용자가 직접 수정함"을 의미한다.
+  el.dataset.userSet = '1';
+}
+
 function doRefreshWithDate(){
-  // T0: dateT0 필드가 data.base_date와 다를 때만 override로 전송
-  // 같으면 자동 탐지 (엑셀 최신 거래일 자동 사용)
-  // T0: 필드에 값 있으면 무조건 그 날짜로 파싱
-  var t0 = (document.getElementById('dateT0') ||{}).value || null;
-  // T-1: 사용자가 직접 지정한 전일비 기준일
-  var d1  = (document.getElementById('dateT1') ||{}).value || null;
-  // YTM: 사용자가 직접 지정한 연초 기준일
-  var ytm = (document.getElementById('dateYtm')||{}).value || null;
+  // T0: 필드에 값 있으면 무조건 그 날짜로 파싱 (T0는 항상 사용자 지정값 우선)
+  var t0El = document.getElementById('dateT0');
+  var t0 = (t0El||{}).value || null;
+  // T-1 / 연초: 사용자가 "직접" 값을 바꾼 경우에만 override로 전송한다.
+  // 자동으로 채워진(계산된) 기본값이 남아있는 것만으로는 override 취급하지 않는다 —
+  // 그래야 T0를 바꿀 때마다 T-1/연초가 새 T0 기준으로 다시 자동 계산된다.
+  var t1El  = document.getElementById('dateT1');
+  var ytmEl = document.getElementById('dateYtm');
+  var d1  = (t1El  && t1El.dataset.userSet  === '1' && t1El.value)  ? t1El.value  : null;
+  var ytm = (ytmEl && ytmEl.dataset.userSet === '1' && ytmEl.value) ? ytmEl.value : null;
   G._d1Override  = d1  || null;
   G._ytmOverride = ytm || null;
   console.log('[재파싱 요청] T0='+(t0||'자동')+' / T-1='+(d1||'자동')+' / YTM='+(ytm||'자동'));

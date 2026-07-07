@@ -204,6 +204,16 @@ def first_date_of_year(series, year):
     first = min(candidates)
     return first, series[first]
 
+def resolve_with_fallback(series, target_date):
+    """target_date에 값이 있으면 그대로, 그 지표에서 없으면(휴장/데이터 미수신)만
+    해당 지표에 한해 그 이전 최근 거래일 값으로 대체한다."""
+    if target_date is None:
+        return None, None
+    exact = series.get(target_date)
+    if exact is not None:
+        return target_date, exact
+    return nearest_on_or_before(series, target_date)
+
 def calc_change(t0_val, ref_val, index_type):
     if t0_val is None or ref_val is None:
         return None, None
@@ -245,7 +255,7 @@ def generate_data(excel_path, output_path=None,
     ytm_date = ytm_date_override or parse_iso_date(f"{t0_date.year}-01-02", "연초")
     one_m_date = t0_date - relativedelta(months=1)
 
-    wb = openpyxl.load_workbook(excel_path, data_only=True, read_only=False)
+    wb = openpyxl.load_workbook(excel_path, data_only=True, read_only=True)
     results = []
 
     for cfg in INDEX_CONFIG:
@@ -273,20 +283,24 @@ def generate_data(excel_path, output_path=None,
         fallback_col = find_fallback_col_idx(ws, date_col, cfg.get("fallback_col"))
         series = read_series(ws, date_col, val_col, fallback_col=fallback_col)
 
-        # 현재가(T0): 없으면 휴장/데이터 미수신 처리 후 직전 영업일 값을 계산용으로 사용
+        # T0 (adjusted today): 지표에 그 날짜 값이 없으면(휴장/데이터 미수신) 그 지표에
+        # 한해서만 직전 최근 거래일 값을 계산용으로 대체한다. 화면 표시(T0.value)는
+        # 여전히 휴장/데이터 미수신으로 남긴다.
         t0_val = series.get(t0_date)
         holiday = t0_val is None
-        if holiday:
-            calc_date, calc_val = nearest_on_or_before(series, t0_date)
-        else:
-            calc_date, calc_val = t0_date, t0_val
+        calc_date, calc_val = resolve_with_fallback(series, t0_date)
 
-        t1_val  = series.get(t1_date)
+        # T-1 (adjusted yesterday): 지표에 그 날짜 값이 없으면 그 지표에 한해서만
+        # 그 이전 최근 거래일 값으로 대체한다.
+        t1_date_actual, t1_val = resolve_with_fallback(series, t1_date)
+
         m1_date_actual, m1_val = nearest_on_or_before(series, one_m_date)
 
-        # 연초 기준일: 사용자 override가 없으면 지표별로 "그 해 처음 등장하는 날짜"를 자동 인식
+        # 연초(YTM): 사용자가 직접 지정했으면 그 날짜를 우선 쓰되, 지표에 그 날짜
+        # 값이 없으면 그 지표에 한해서만 이전 최근 거래일로 대체한다.
+        # 지정하지 않았으면 지표별로 "그 해 처음 등장하는 날짜"를 자동 인식한다.
         if ytm_date_override:
-            effective_ytm, ytm_val = ytm_date_override, series.get(ytm_date_override)
+            effective_ytm, ytm_val = resolve_with_fallback(series, ytm_date_override)
         else:
             effective_ytm, ytm_val = first_date_of_year(series, t0_date.year)
 
@@ -310,7 +324,7 @@ def generate_data(excel_path, output_path=None,
             "error": "휴장/데이터 미수신" if holiday else None,
             "source_header": header_used,
             "T0": {"date": str(t0_date), "value": None if holiday else t0_val},
-            "1D": {"date": str(t1_date), "value": t1_val, "change": d1_change},
+            "1D": {"date": str(t1_date_actual) if t1_date_actual else None, "value": t1_val, "change": d1_change},
             "1M": {"date": str(m1_date_actual) if m1_date_actual else None, "value": m1_val, "change": m1_change},
             "YTM": {"date": str(effective_ytm) if effective_ytm else None, "value": ytm_val, "change": ytm_change},
         })
@@ -318,7 +332,7 @@ def generate_data(excel_path, output_path=None,
     wb.close()
 
     chart_cutoff = t0_date - timedelta(days=366)
-    wb2 = openpyxl.load_workbook(excel_path, data_only=True, read_only=False)
+    wb2 = openpyxl.load_workbook(excel_path, data_only=True, read_only=True)
     chart_series = []
     for ccfg in CHART_CONFIG:
         sd = {"label": ccfg["label"], "color": ccfg["color"], "dash": ccfg["dash"], "dates": [], "values": []}
